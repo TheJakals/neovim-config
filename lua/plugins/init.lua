@@ -1,7 +1,6 @@
 local map = vim.keymap.set
 
 vim.pack.add({
-  -- Colorshemes
   "https://github.com/rebelot/kanagawa.nvim",
   "https://github.com/folke/tokyonight.nvim",
   "https://github.com/nvim-treesitter/nvim-treesitter",
@@ -16,19 +15,18 @@ vim.pack.add({
   "https://github.com/nvim-telescope/telescope.nvim",
   "https://github.com/nvim-lua/plenary.nvim",
   "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
+  { src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
+  "https://github.com/windwp/nvim-ts-autotag",
 })
 
 -- Colorscheme
 require("kanagawa").setup({ transparent = true })
--- Default options:
-
 vim.cmd.colorscheme("kanagawa")
 
 -- Treesitter
 require("nvim-treesitter").install({
   "lua", "go", "templ", "html", "css", "javascript", "typescript", "json", "bash"
 })
-
 vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     pcall(vim.treesitter.start)
@@ -45,7 +43,7 @@ require("gitsigns").setup()
 map("n", "<leader>gg", "<cmd>LazyGit<cr>")
 
 -- Lualine
-require("lualine").setup({ options = { theme = "tokyonight" } })
+require("lualine").setup({ options = { theme = "kanagawa" } })
 
 -- Autopairs
 require("nvim-autopairs").setup()
@@ -73,9 +71,7 @@ require("telescope").setup({
     border = true,
     prompt_prefix = " ",
     selection_caret = " ",
-    preview = {
-      treesitter = false,
-    },
+    preview = { treesitter = false },
   },
   extensions = { fzf = {} },
 })
@@ -89,3 +85,40 @@ map("n", "<leader>fh", builtin.help_tags)
 map("n", "<leader>fc", builtin.colorscheme)
 map("n", "<leader>fd", builtin.diagnostics)
 map("n", "<leader>fr", builtin.oldfiles)
+
+-- Harpoon
+local harpoon = require("harpoon")
+harpoon:setup()
+
+local conf = require("telescope.config").values
+local function toggle_telescope(harpoon_files)
+  local file_paths = {}
+  for _, item in ipairs(harpoon_files.items) do
+    table.insert(file_paths, item.value)
+  end
+  require("telescope.pickers").new({}, {
+    prompt_title = "Harpoon",
+    finder = require("telescope.finders").new_table({ results = file_paths }),
+    previewer = conf.file_previewer({}),
+    sorter = conf.generic_sorter({}),
+  }):find()
+end
+
+map("n", "<leader>a", function() harpoon:list():add() end,              { desc = "Harpoon add file" })
+map("n", "<leader>m", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon menu" })
+map("n", "<C-e>",     function() toggle_telescope(harpoon:list()) end,  { desc = "Harpoon telescope" })
+map("n", "<C-1>",     function() harpoon:list():select(1) end)
+map("n", "<C-2>",     function() harpoon:list():select(2) end)
+map("n", "<C-3>",     function() harpoon:list():select(3) end)
+map("n", "<C-4>",     function() harpoon:list():select(4) end)
+map("n", "<leader>h", function() harpoon:list():prev() end, { desc = "Go to previous file"})
+map("n", "<leader>l", function() harpoon:list():next() end, { desc = "Go to next file"})
+
+-- Autotag
+require("nvim-ts-autotag").setup({
+  opts = {
+    enable_close = true,
+    enable_rename = true,
+    enable_close_on_slash = true,
+  },
+})
