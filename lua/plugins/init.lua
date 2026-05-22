@@ -19,6 +19,7 @@ vim.pack.add({
   "https://github.com/windwp/nvim-ts-autotag",
 })
 
+
 -- Colorscheme
 require("kanagawa").setup({ transparent = true })
 vim.cmd.colorscheme("kanagawa")
