@@ -1,5 +1,13 @@
 {
   "plugins": {
+    "accent.vim": {
+      "rev": "54e0b255cb2c93555014197c8adc59d631c25696",
+      "src": "https://github.com/Alligator/accent.vim"
+    },
+    "colorbuddy.nvim": {
+      "rev": "8b968581e5c19d22a861d5f3fe5dbd83394fa681",
+      "src": "https://github.com/tjdevries/colorbuddy.nvim"
+    },
     "conform.nvim": {
       "rev": "18aeab3d63d350dcf44d64c462cc489a3412af40",
       "src": "https://github.com/stevearc/conform.nvim"
@@ -33,6 +41,10 @@
       "rev": "cbf8d285e1462dd24acf3507817be2bbcb035919",
       "src": "https://github.com/williamboman/mason.nvim"
     },
+    "noirbuddy.nvim": {
+      "rev": "299dc7c68c29dabdb9564cb78e9169fd5bbca5f7",
+      "src": "https://github.com/jesseleite/noirbuddy.nvim"
+    },
     "nvim-autopairs": {
       "rev": "7b9923abad60b903ece7c52940e1321d39eccc79",
       "src": "https://github.com/windwp/nvim-autopairs"
@@ -64,6 +76,10 @@
     "tokyonight.nvim": {
       "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
       "src": "https://github.com/folke/tokyonight.nvim"
+    },
+    "vague.nvim": {
+      "rev": "49fe06ad33d8847b931ba4279197bda222374cd1",
+      "src": "https://github.com/vague-theme/vague.nvim"
     },
     "which-key.nvim": {
       "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",

@@ -49,20 +49,4 @@ autocmd("FileType", {
   end,
 })
 
--- Trigger completion after dot
-autocmd("TextChangedI", {
-  callback = function()
-    local line = vim.api.nvim_get_current_line()
-    local col = vim.api.nvim_win_get_cursor(0)[2]
-    local char = line:sub(col, col)
-    if char == "." then
-      vim.api.nvim_feedkeys(
-        vim.api.nvim_replace_termcodes("<C-x><C-o>", true, false, true),
-        "n",
-        false
-      )
-    end
-  end,
-})
-
 

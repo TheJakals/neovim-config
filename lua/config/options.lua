@@ -8,12 +8,10 @@ opt.number = true
 opt.relativenumber = true
 
 -- Indentation
-opt.tabstop = 2
-opt.shiftwidth = 2
+opt.tabstop = 8
+opt.shiftwidth = 8
 opt.expandtab = true
-opt.smartindent = true
-
--- UI
+opt.smartindent = true -- UI
 opt.termguicolors = true
 opt.signcolumn = "yes"
 opt.cursorline = true
@@ -21,6 +19,9 @@ opt.scrolloff = 12
 opt.wrap = false
 opt.splitright = true
 opt.splitbelow = true
+opt.linespace = 20   -- pixels between lines; try 6–8
+opt.numberwidth = 4
+opt.autoindent = true
 
 -- Search
 opt.ignorecase = true
@@ -35,3 +36,5 @@ opt.undofile = true
 
 -- Completion (0.12 native)
 opt.autocomplete = true
+opt.complete = "o,."                              -- LSP (omnifunc) first, then buffer words
+opt.completeopt = "menuone,noselect,popup,fuzzy"  -- "popup" shows docs for selected item

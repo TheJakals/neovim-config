@@ -3,6 +3,10 @@ local map = vim.keymap.set
 vim.pack.add({
   "https://github.com/rebelot/kanagawa.nvim",
   "https://github.com/folke/tokyonight.nvim",
+  "https://github.com/vague-theme/vague.nvim",
+  "https://github.com/tjdevries/colorbuddy.nvim",
+  "https://github.com/jesseleite/noirbuddy.nvim",
+  "https://github.com/Alligator/accent.vim",
   "https://github.com/nvim-treesitter/nvim-treesitter",
   "https://github.com/williamboman/mason.nvim",
   "https://github.com/lewis6991/gitsigns.nvim",
@@ -17,16 +21,28 @@ vim.pack.add({
   "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
   { src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
   "https://github.com/windwp/nvim-ts-autotag",
+  "https://github.com/OXY2DEV/markview.nvim",
 })
 
 
 -- Colorscheme
-require("kanagawa").setup({ transparent = true })
-vim.cmd.colorscheme("kanagawa")
+vim.g.accent_colour = "yellow"  -- yellow (default), orange, red, green, blue, magenta, cyan
+vim.g.accent_no_bg = 1        -- transparent background (uses terminal default)
+vim.cmd.colorscheme("accent")
+--require("accent").setup({transparent})
+--require("noirbuddy").setup {
+  --transparent,
+  --preset = "crt-green",
+--}
+--vim.cmd.colorscheme("noirbuddy")
+--require("vague").setup({ transparent})
+--vim.cmd.colorscheme("vague")
+--require("kanagawa").setup({ transparent = true })
+--vim.cmd.colorscheme("kanagawa")
 
 -- Treesitter
 require("nvim-treesitter").install({
-  "lua", "go", "templ", "html", "css", "javascript", "typescript", "json", "bash"
+  "lua", "go", "templ", "html", "css", "javascript", "typescript", "json", "bash", "odin"
 })
 vim.api.nvim_create_autocmd("FileType", {
   callback = function()
@@ -44,7 +60,11 @@ require("gitsigns").setup()
 map("n", "<leader>gg", "<cmd>LazyGit<cr>")
 
 -- Lualine
-require("lualine").setup({ options = { theme = "kanagawa" } })
+require("lualine").setup({
+  options = {
+    theme = "auto",
+  },
+})
 
 -- Autopairs
 require("nvim-autopairs").setup()
@@ -123,3 +143,5 @@ require("nvim-ts-autotag").setup({
     enable_close_on_slash = true,
   },
 })
+
+

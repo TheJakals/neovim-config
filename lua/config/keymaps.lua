@@ -17,3 +17,18 @@ map("i", "<S-Tab>", function()
     )
   end
 end, { desc = "Accept first completion" })
+
+-- Manually trigger completion
+map("i", "<S-Space>", "<C-x><C-o>", { desc = "Trigger completion" })
+
+local function indent_aware(key)
+  return function()
+    if vim.api.nvim_get_current_line():match("^%s*$") then
+      return '"_cc'
+    end
+    return key
+  end
+end
+
+vim.keymap.set("n", "i", indent_aware("i"), { expr = true, desc = "Indent-aware insert" })
+vim.keymap.set("n", "a", indent_aware("a"), { expr = true, desc = "Indent-aware append" })
