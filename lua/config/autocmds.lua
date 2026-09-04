@@ -49,4 +49,10 @@ autocmd("FileType", {
   end,
 })
 
-
+-- Avoid dbext-dependent SQL omnifunc error
+autocmd("FileType", {
+  pattern = "sql",
+  callback = function()
+    vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+  end,
+})
