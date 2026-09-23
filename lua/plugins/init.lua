@@ -42,7 +42,7 @@ vim.cmd.colorscheme("accent")
 
 -- Treesitter
 require("nvim-treesitter").install({
-  "lua", "go", "templ", "html", "css", "javascript", "typescript", "json", "bash", "odin"
+  "lua", "go", "templ", "html", "css", "javascript", "typescript", "json", "bash", "odin", "sql"
 })
 vim.api.nvim_create_autocmd("FileType", {
   callback = function()
