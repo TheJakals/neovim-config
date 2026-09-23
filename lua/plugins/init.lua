@@ -8,7 +8,7 @@ vim.pack.add({
   "https://github.com/jesseleite/noirbuddy.nvim",
   "https://github.com/Alligator/accent.vim",
   "https://github.com/nvim-treesitter/nvim-treesitter",
-  "https://github.com/williamboman/mason.nvim",
+  "https://github.com/mason-org/mason.nvim",
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/kdheepak/lazygit.nvim",
   "https://github.com/nvim-lualine/lualine.nvim",
@@ -78,7 +78,8 @@ require("conform").setup({
     html = { "prettier" },
     templ = { "templ" },
   },
-  format_on_save = { timeout_ms = 500 },
+  -- Use LSP formatting only when no formatter above is set (e.g. Odin via ols)
+  format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
 })
 
 -- Which-key

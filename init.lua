@@ -5,6 +5,7 @@ vim.g.omni_sql_no_default_maps = 1
 
 require("config.options")
 require("config.keymaps")
+require("config.terminal")
 require("config.autocmds")
 require("config.diagnostics")
 require("plugins")

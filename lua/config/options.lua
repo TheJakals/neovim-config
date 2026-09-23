@@ -19,7 +19,7 @@ opt.scrolloff = 12
 opt.wrap = false
 opt.splitright = true
 opt.splitbelow = true
-opt.linespace = 20   -- pixels between lines; try 6–8
+opt.winborder = "rounded"  -- border on floating windows (hover, signature help)
 opt.numberwidth = 4
 opt.autoindent = true
 

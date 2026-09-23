@@ -1,24 +1,22 @@
 local autocmd = vim.api.nvim_create_autocmd
 
--- Auto format on save
-autocmd("BufWritePre", {
-  callback = function()
-    vim.lsp.buf.format({ async = false })
-  end,
-})
-
 -- Highlight on yank
 autocmd("TextYankPost", {
-  callback = function() vim.highlight.on_yank() end,
+  callback = function() vim.hl.on_yank() end,
 })
 
--- Remove trailing whitespace on save
+-- Remove trailing whitespace on save (keeps cursor in place; markdown uses trailing spaces as line breaks)
 autocmd("BufWritePre", {
-  callback = function() vim.cmd("%s/\\s\\+$//e") end,
+  callback = function(ev)
+    local ft = vim.bo[ev.buf].filetype
+    if ft == "markdown" or ft == "diff" then
+      return
+    end
+    local view = vim.fn.winsaveview()
+    vim.cmd([[keeppatterns %s/\s\+$//e]])
+    vim.fn.winrestview(view)
+  end,
 })
-
--- Register .templ filetype
-vim.filetype.add({ extension = { templ = "templ" } })
 
 -- Transparent background after colorscheme loads
 autocmd("ColorScheme", {
@@ -32,10 +30,18 @@ autocmd("ColorScheme", {
   end,
 })
 
+-- Plugin build steps (must be defined before vim.pack.add)
 autocmd("PackChanged", {
   callback = function(ev)
-    if ev.data.spec.name == "telescope-fzf-native.nvim" then
-      vim.system({ "make" }, { cwd = ev.data.path })
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == "telescope-fzf-native.nvim" and (kind == "install" or kind == "update") then
+      vim.system({ "make" }, { cwd = ev.data.path }):wait()
+    end
+    if name == "nvim-treesitter" and kind == "update" then
+      if not ev.data.active then
+        vim.cmd.packadd("nvim-treesitter")
+      end
+      vim.cmd("TSUpdate")
     end
   end,
 })

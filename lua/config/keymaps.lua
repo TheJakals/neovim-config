@@ -1,29 +1,21 @@
 local map = vim.keymap.set
 
--- Accept first completion suggestion with Shift+Space
+-- Accept completion with Shift+Tab (first item if none selected)
 map("i", "<S-Tab>", function()
-  local pumvisible = vim.fn.pumvisible() == 1
-  if pumvisible then
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes("<C-n><C-y>", true, false, true),
-      "n",
-      false
-    )
-  else
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes("<S-Tab>", true, false, true),
-      "n",
-      false
-    )
+  if vim.fn.pumvisible() == 0 then
+    return "<S-Tab>"
   end
-end, { desc = "Accept first completion" })
+  return vim.fn.complete_info({ "selected" }).selected == -1 and "<C-n><C-y>" or "<C-y>"
+end, { expr = true, desc = "Accept completion" })
 
 -- Manually trigger completion
 map("i", "<S-Space>", "<C-x><C-o>", { desc = "Trigger completion" })
 
 local function indent_aware(key)
   return function()
-    if vim.api.nvim_get_current_line():match("^%s*$") then
+    -- Skip with a count (3i would become 3"_cc) and in terminal/special buffers
+    if vim.v.count == 0 and vim.bo.modifiable and vim.bo.buftype == ""
+      and vim.api.nvim_get_current_line():match("^%s*$") then
       return '"_cc'
     end
     return key
